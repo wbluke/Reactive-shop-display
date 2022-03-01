@@ -29,7 +29,7 @@ public interface ShopReactiveRepository {
 public class Shop {
     private Long shopNumber;
     private String shopName;
-    priave ShopStatus shopStatus;
+    private ShopStatus shopStatus;
 }
 ```
 
