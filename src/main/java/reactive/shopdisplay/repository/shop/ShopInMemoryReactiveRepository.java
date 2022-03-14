@@ -30,16 +30,24 @@ public class ShopInMemoryReactiveRepository implements ShopReactiveRepository {
 
     @Override
     public Mono<Shop> save(Shop shop) {
+        Shop savedShop = saveOne(shop);
+        return Mono.just(savedShop);
+    }
+
+    @Override
+    public Flux<Shop> saveAll(List<Shop> shops) {
+        return Flux.fromStream(
+                shops.stream()
+                        .map(this::saveOne)
+        );
+    }
+
+    private Shop saveOne(Shop shop) {
         long shopId = this.shopId.getAndIncrement();
         shop.setShopNumber(shopId);
 
         this.shops.put(shopId, shop);
-        return Mono.just(shop);
-    }
-
-    @Override
-    public Flux<Shop> saveAll(List<Shop> shop) {
-        return null;
+        return shop;
     }
 
 }
