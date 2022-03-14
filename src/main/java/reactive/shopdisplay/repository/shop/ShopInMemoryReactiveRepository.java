@@ -25,7 +25,11 @@ public class ShopInMemoryReactiveRepository implements ShopReactiveRepository {
 
     @Override
     public Flux<Shop> findAllByIdsAndShopStatus(List<Long> shopNumbers, ShopStatus shopStatus) {
-        return null;
+        return Flux.fromStream(
+                shopNumbers.stream()
+                        .map(shops::get)
+                        .filter(Shop::isOpen)
+        );
     }
 
     @Override

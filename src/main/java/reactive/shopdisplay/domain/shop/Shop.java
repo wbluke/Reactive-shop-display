@@ -16,6 +16,10 @@ public class Shop {
         this.shopStatus = shopStatus;
     }
 
+    public boolean isOpen() {
+        return shopStatus.isOpen();
+    }
+
     public void setShopNumber(Long shopNumber) {
         this.shopNumber = shopNumber;
     }

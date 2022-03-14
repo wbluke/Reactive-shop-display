@@ -11,4 +11,8 @@ public enum ShopStatus {
 
     private final String text;
 
+    public boolean isOpen() {
+        return this == OPEN;
+    }
+
 }
