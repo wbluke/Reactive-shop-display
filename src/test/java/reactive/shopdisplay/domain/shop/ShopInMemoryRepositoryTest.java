@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.util.Objects;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static reactive.shopdisplay.domain.shop.ShopStatus.PREPARING;
 
@@ -30,9 +32,36 @@ class ShopInMemoryRepositoryTest {
 
         // then
         StepVerifier.create(shopMono)
-                .assertNext(savedShop -> assertThat(savedShop)
+                .assertNext(result -> {
+                    assertThat(result.getShopNumber()).isNotNull();
+                    assertThat(result)
+                            .extracting("shopName", "shopStatus")
+                            .containsExactly("덕수네공방", PREPARING);
+                })
+                .verifyComplete();
+    }
+
+    @DisplayName("shopNumber로 Shop을 단건 조회한다.")
+    @Test
+    void findById() {
+        // given
+        Shop shop = Shop.builder()
+                .shopName("덕수네공방")
+                .shopStatus(PREPARING)
+                .build();
+        Mono<Shop> shopMono = shopReactiveRepository.save(shop);
+        Shop savedShop = shopMono.block();
+
+        Long shopNumber = Objects.requireNonNull(savedShop).getShopNumber();
+
+        // when
+        Mono<Shop> foundShop = shopReactiveRepository.findById(shopNumber);
+
+        // then
+        StepVerifier.create(foundShop)
+                .assertNext(result -> assertThat(result)
                         .extracting("shopNumber", "shopName", "shopStatus")
-                        .containsExactly(1L, "덕수네공방", PREPARING)
+                        .containsExactly(shopNumber, "덕수네공방", PREPARING)
                 )
                 .verifyComplete();
     }

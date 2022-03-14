@@ -20,7 +20,7 @@ public class ShopInMemoryReactiveRepository implements ShopReactiveRepository {
 
     @Override
     public Mono<Shop> findById(Long shopNumber) {
-        return null;
+        return Mono.just(shops.get(shopNumber));
     }
 
     @Override
