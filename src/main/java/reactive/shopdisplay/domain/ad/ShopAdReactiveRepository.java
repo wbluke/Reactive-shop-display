@@ -11,6 +11,6 @@ public interface ShopAdReactiveRepository {
 
     Mono<ShopAd> save(ShopAd shopAd);
 
-    Flux<ShopAd> saveAll(List<ShopAd> shopAd);
+    Flux<ShopAd> saveAll(List<ShopAd> shopAds);
 
 }

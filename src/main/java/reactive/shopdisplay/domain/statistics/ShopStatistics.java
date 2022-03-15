@@ -1,4 +1,4 @@
-package reactive.shopdisplay.domain.ad;
+package reactive.shopdisplay.domain.statistics;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,19 +6,19 @@ import lombok.Getter;
 import java.util.Objects;
 
 @Getter
-public class ShopAd {
+public class ShopStatistics {
 
     private Long id;
-    private AdType adType;
+    private long reviewCount;
     private Long shopNumber;
 
     @Builder
-    private ShopAd(AdType adType, Long shopNumber) {
-        this.adType = adType;
+    private ShopStatistics(long reviewCount, Long shopNumber) {
+        this.reviewCount = reviewCount;
         this.shopNumber = shopNumber;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
