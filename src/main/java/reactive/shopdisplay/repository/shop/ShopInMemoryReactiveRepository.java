@@ -24,12 +24,12 @@ public class ShopInMemoryReactiveRepository implements ShopReactiveRepository {
     }
 
     @Override
-    public Flux<Shop> findAllByIdsAndShopStatus(List<Long> shopNumbers, ShopStatus shopStatus) {
-        return Flux.fromStream(
-                shopNumbers.stream()
-                        .map(shops::get)
-                        .filter(Shop::isOpen)
-        );
+    public Mono<Shop> findOpenShopById(Long shopNumber) {
+        Shop shop = shops.get(shopNumber);
+        if (shop.isOpen()) {
+            return Mono.just(shop);
+        }
+        return Mono.error(() -> new IllegalArgumentException("OPEN 상태의 가게가 아닙니다."));
     }
 
     @Override

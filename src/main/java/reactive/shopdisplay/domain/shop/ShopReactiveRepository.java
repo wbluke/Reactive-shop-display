@@ -9,7 +9,7 @@ public interface ShopReactiveRepository {
 
     Mono<Shop> findById(Long shopNumber);
 
-    Flux<Shop> findAllByIdsAndShopStatus(List<Long> shopNumbers, ShopStatus shopStatus);
+    Mono<Shop> findOpenShopById(Long shopNumber);
 
     Mono<Shop> save(Shop shop);
 
